@@ -2,12 +2,14 @@
 
 bypop = function(qmatrix,coord,pop) {
   # arguments:
-  # coord: matrix of coordinates  (nindividuals x 2)
   # qmatrix: matrix of coefficients  (nindividuals x K) # K=number of clusters
+  # coord: matrix of coordinates  (nindividuals x 2)
   # pop: generic vector of population labels, can be vector of numeric, character, factor
   # returns:
-  # list of the 2 matrix qpop and coord.pop with values averaged over individuals of a same population 
-  # and with rownames correponding to the population labels 
+  # list(matrix,matrix) 
+  # qpop: average admixture coefficients for each population sample (npopulations x K)
+  # coord.pop: average location for each population sample (npopulations x 2)
+  # matrix rownames correpond to population labels 
   
   ulabels=unique(pop)
   nlabels=length(ulabels)
@@ -24,16 +26,16 @@ bypop = function(qmatrix,coord,pop) {
 
 ## EXAMPLE (after loading everything as indicated in Olivier's note)
 pop=rep(paste("plant",1:60),each=10)
-tmp=bypop(coord,qmatrix,pop)
-qpop=tmp[[1]]
-coord.pop=tmp[[2]]
+info.bypop=bypop(qmatrix,coord,pop)
+qpop=info.bypop$qpop
+coord.pop=info.bypop$coord.pop
 
 pop=rep(1:60, each = 10)
-tmp=bypop(coord,qmatrix,pop)
-qpop=tmp[[1]]
-coord.pop=tmp[[2]]
+info.bypop=bypop(qmatrix,coord,pop)
+qpop=info.bypop$qpop
+coord.pop=info.bypop$coord.pop
 
 pop=as.factor(rep(paste("plant",1:60),each=10))
-tmp=bypop(coord,qmatrix,pop)
-qpop=tmp[[1]]
-coord.pop=tmp[[2]]
+info.bypop=bypop(qmatrix,coord,pop)
+qpop=info.bypop[[1]]
+coord.pop=info.bypop[[2]]
